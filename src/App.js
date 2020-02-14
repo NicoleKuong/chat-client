@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import axios from "axios";
 
 class App extends React.Component {
   state = {
@@ -31,9 +32,16 @@ class App extends React.Component {
     };
   }
 
-  onSubmit = event => {
+  onSubmit = async event => {
     event.preventDefault();
-    console.log("value test", this.state.value);
+    try {
+      //we do not use this response in anywhere
+      const response = await axios.post("http://localhost:4000/message", {
+        text: this.state.value
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   onChange = event => {
@@ -58,7 +66,7 @@ class App extends React.Component {
             type="text"
             value={this.state.value}
           />
-          <button>submit</button>
+          <button>Submit</button>
           <button onClick={this.clear}>Clear</button>
         </form>
         {paragraphs}
